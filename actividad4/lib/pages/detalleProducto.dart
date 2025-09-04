@@ -1,13 +1,12 @@
 import 'package:actividad4/pages/registration_and_editing.dart';
+import 'package:actividad4/services/product_service.dart';
 import 'package:flutter/material.dart';
 import 'package:actividad4/models/products.dart';
-import 'package:actividad4/services/products_service.dart';
- // Pantalla de edición
 
 class DetalleProducto extends StatefulWidget {
   final Products product;
 
-  const DetalleProducto({Key? key, required this.product}) : super(key: key);
+  const DetalleProducto({super.key, required this.product});
 
   @override
   State<DetalleProducto> createState() => _DetalleProductoState();
@@ -41,7 +40,7 @@ class _DetalleProductoState extends State<DetalleProducto> {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => RegistrationScreen(product: widget.product),
+        builder: (_) => RegistrationAndEditing(product: widget.product),
       ),
     );
 

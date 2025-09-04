@@ -1,22 +1,24 @@
+import 'package:actividad4/services/product_service.dart';
 import 'package:flutter/material.dart';
 import 'package:actividad4/models/products.dart';
-import 'package:actividad4/services/products_service.dart';
 
-class RegistrationScreen extends StatefulWidget {
+
+class RegistrationAndEditing extends StatefulWidget {
   final Products? product;
 
-  const RegistrationScreen({Key? key, this.product}) : super(key: key);
+  const RegistrationAndEditing({Key? key, this.product}) : super(key: key);
 
   @override
-  State<RegistrationScreen> createState() => _RegistrationScreenState();
+  State<RegistrationAndEditing> createState() => _RegistrationScreenState();
 }
 
-class _RegistrationScreenState extends State<RegistrationScreen> {
+class _RegistrationScreenState extends State<RegistrationAndEditing> {
   final _formKey = GlobalKey<FormState>();
 
   late TextEditingController _nameController;
   late TextEditingController _descriptionController;
   late TextEditingController _priceController;
+  late TextEditingController _categoryController;
 
   bool _isSaving = false;
 
@@ -27,6 +29,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     _nameController = TextEditingController(text: widget.product?.name ?? '');
     _descriptionController = TextEditingController(text: widget.product?.description ?? '');
     _priceController = TextEditingController(text: widget.product?.price.toString() ?? '');
+    _categoryController = TextEditingController(text: widget.product?.category ?? '');
   }
 
   @override
@@ -34,6 +37,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     _nameController.dispose();
     _descriptionController.dispose();
     _priceController.dispose();
+    _categoryController.dispose();
     super.dispose();
   }
 
@@ -50,7 +54,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       id: widget.product!.id,
       name: _nameController.text,
       description: _descriptionController.text,
-      price: double.tryParse(_priceController.text) ?? 0.0, category: '',
+      price: double.tryParse(_priceController.text) ?? 0.0,
+      category: _categoryController.text,
     );
 
     try {
@@ -119,6 +124,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       },
                     ),
                     const SizedBox(height: 20),
+                     TextFormField(
+                      controller: _categoryController,
+                      decoration: const InputDecoration(labelText: 'Categoria'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Por favor ingresa una categoria';
+                        }
+                        return null;
+  }),            
                     ElevatedButton(
                       onPressed: _saveProduct,
                       child: Text(isEditing ? 'Guardar cambios' : 'Registrar'),

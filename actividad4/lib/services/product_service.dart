@@ -1,13 +1,12 @@
 import 'dart:convert';
+import 'package:actividad4/models/products.dart';
 import 'package:http/http.dart' as http;
-import '../models/products.dart';
 
 class ProductsService {
-  static const String baseUrl = "http://192.168.1.123:7059/Product";
+  // static const String baseUrl = "http://192.168.1.123:7059/Product";
 
-  // static const String baseUrl = "https://localhost:7059/Product";
+  static const String baseUrl = "https://localhost:7059/Product";
 
-  // Obtener todos los productos
   Future<List<Products>> fetchProducts() async {
     final response = await http.get(Uri.parse("$baseUrl/GetProducts"));
 
@@ -19,7 +18,6 @@ class ProductsService {
     }
   }
 
-  // Buscar productos por parámetro (nombre, categoría o precio)
   Future<List<Products>> searchProducts(String parameter) async {
     final response = await http.get(
       Uri.parse("$baseUrl/GetProductsByParameter"),
@@ -34,7 +32,6 @@ class ProductsService {
     }
   }
 
-  // Crear un producto nuevo
   Future<Products> createProduct(Products product) async {
     final response = await http.post(
       Uri.parse("$baseUrl/CreateProduct"),
@@ -54,7 +51,6 @@ class ProductsService {
     }
   }
 
-  // Actualizar un producto existente
   Future<Products> updateProduct(Products product) async {
     final response = await http.post(
       Uri.parse("$baseUrl/UpdateProduct"),
@@ -69,7 +65,6 @@ class ProductsService {
     }
   }
 
-  // Eliminar un producto por ID
   Future<void> deleteProduct(int id) async {
     final response = await http.post(
       Uri.parse("$baseUrl/DeleteProduct"),

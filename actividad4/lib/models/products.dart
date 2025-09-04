@@ -18,7 +18,7 @@ class Products {
       id: json["id"] as int,
       name: json["name"] ?? "",
       description: json["description"] ?? "",
-      price: json["price"] as double,
+      price: (json["price"] as num).toDouble(),
       category: json["category"] ?? "",
     );
   }

@@ -1,8 +1,9 @@
-import 'package:actividad4/pages/registration_and_editing.dart';
-import 'package:flutter/material.dart';
 import 'package:actividad4/models/products.dart';
-import 'package:actividad4/services/products_service.dart';
- // Asegúrate que esta ruta sea correcta
+import 'package:actividad4/pages/detalleProducto.dart';
+import 'package:actividad4/pages/registration_and_editing.dart';
+import 'package:actividad4/services/product_service.dart';
+import 'package:actividad4/widgets/product_widget.dart';
+import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -64,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => RegistrationScreen(product: product),
+        builder: (_) => RegistrationAndEditing(product: product),
       ),
     );
 
@@ -98,28 +99,60 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 Expanded(
-                  child: _filteredProducts.isEmpty
-                      ? const Center(child: Text('No se encontraron productos'))
-                      : ListView.builder(
-                          itemCount: _filteredProducts.length,
-                          itemBuilder: (context, index) {
-                            final product = _filteredProducts[index];
-                            return Card(
-                              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                              child: ListTile(
-                                title: Text(product.name),
-                                subtitle: Text('Precio: \$${product.price.toStringAsFixed(2)}'),
-                                trailing: TextButton(
-                                  child: const Text('Ver Detalle'),
-                                  onPressed: () => _goToRegistration(product: product),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                ),
-              ],
-            ),
+  child: _filteredProducts.isEmpty
+      ? const Center(child: Text('No hay productos'))
+      : ListView.builder(
+          itemCount: _filteredProducts.length,
+          itemBuilder: (context, index) {
+            final product = _filteredProducts[index];
+            return CardPrueba(
+              product: product,
+              onDetailPressed: () => DetalleProducto(product: product),
+            );
+          },
+        ),
+),
+
+          //       Expanded(
+          //         child: _loading
+          //       ? const Center(child: CircularProgressIndicator())
+          //       : _filteredProducts.isEmpty
+          //           ? const Center(child: Text('No hay productos'))
+          //           : ListView.builder(
+          //               itemCount: _filteredProducts.length,
+          //               itemBuilder: (context, index) {
+          //                 final product = _filteredProducts[index];
+          //                 return CardPrueba(
+          //                   product: product,
+          //                   onDetailPressed: () => DetalleProducto(product: product,),
+          //                 );
+          //               },
+          //             ),
+          // ),
+        ],
+      ),
+            //       child: _filteredProducts.isEmpty
+            //           ? const Center(child: Text('No se encontraron productos'))
+            //           : ListView.builder(
+            //               itemCount: _filteredProducts.length,
+            //               itemBuilder: (context, index) {
+            //                 final product = _filteredProducts[index];
+            //                 return Card(
+            //                   margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            //                   child: ListTile(
+            //                     title: Text(product.name),
+            //                     subtitle: Text('Precio: \$${product.price.toStringAsFixed(2)}'),
+            //                     trailing: TextButton(
+            //                       child: const Text('Ver Detalle'),
+            //                       onPressed: () => _goToRegistration(product: product),
+            //                     ),
+            //                   ),
+            //                 );
+            //               },
+            //             ),
+            //     ),
+            //   ],
+            // ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _goToRegistration(),
         tooltip: 'Registrar producto',
