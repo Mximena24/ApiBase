@@ -23,7 +23,8 @@ class _DetalleProductoState extends State<DetalleProducto> {
     });
 
     try {
-      await service.deleteProduct(widget.product.id);
+      await service.deleteProduct(widget.product.id!);
+
       // Volver al Home y avisar que hay que refrescar la lista
       Navigator.pop(context, 'refresh');
     } catch (e) {

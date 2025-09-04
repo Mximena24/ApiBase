@@ -51,7 +51,7 @@ class _RegistrationScreenState extends State<RegistrationAndEditing> {
     final service = ProductsService();
 
     final product = Products(
-      id: widget.product!.id,
+      id: widget.product?.id,
       name: _nameController.text,
       description: _descriptionController.text,
       price: double.tryParse(_priceController.text) ?? 0.0,
@@ -123,7 +123,6 @@ class _RegistrationScreenState extends State<RegistrationAndEditing> {
                         return null;
                       },
                     ),
-                    const SizedBox(height: 20),
                      TextFormField(
                       controller: _categoryController,
                       decoration: const InputDecoration(labelText: 'Categoria'),
@@ -131,8 +130,11 @@ class _RegistrationScreenState extends State<RegistrationAndEditing> {
                         if (value == null || value.isEmpty) {
                           return 'Por favor ingresa una categoria';
                         }
+                        const SizedBox(height: 20);
                         return null;
+                        
   }),            
+                    SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: _saveProduct,
                       child: Text(isEditing ? 'Guardar cambios' : 'Registrar'),

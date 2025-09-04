@@ -106,53 +106,24 @@ class _MyHomePageState extends State<MyHomePage> {
           itemBuilder: (context, index) {
             final product = _filteredProducts[index];
             return CardPrueba(
-              product: product,
-              onDetailPressed: () => DetalleProducto(product: product),
-            );
+  product: product,
+  onDetailPressed: () async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => DetalleProducto(product: product),
+      ),
+    );
+    if (result == 'refresh') {
+      _fetchProducts();
+    }
+  },
+);
           },
         ),
 ),
-
-          //       Expanded(
-          //         child: _loading
-          //       ? const Center(child: CircularProgressIndicator())
-          //       : _filteredProducts.isEmpty
-          //           ? const Center(child: Text('No hay productos'))
-          //           : ListView.builder(
-          //               itemCount: _filteredProducts.length,
-          //               itemBuilder: (context, index) {
-          //                 final product = _filteredProducts[index];
-          //                 return CardPrueba(
-          //                   product: product,
-          //                   onDetailPressed: () => DetalleProducto(product: product,),
-          //                 );
-          //               },
-          //             ),
-          // ),
         ],
       ),
-            //       child: _filteredProducts.isEmpty
-            //           ? const Center(child: Text('No se encontraron productos'))
-            //           : ListView.builder(
-            //               itemCount: _filteredProducts.length,
-            //               itemBuilder: (context, index) {
-            //                 final product = _filteredProducts[index];
-            //                 return Card(
-            //                   margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            //                   child: ListTile(
-            //                     title: Text(product.name),
-            //                     subtitle: Text('Precio: \$${product.price.toStringAsFixed(2)}'),
-            //                     trailing: TextButton(
-            //                       child: const Text('Ver Detalle'),
-            //                       onPressed: () => _goToRegistration(product: product),
-            //                     ),
-            //                   ),
-            //                 );
-            //               },
-            //             ),
-            //     ),
-            //   ],
-            // ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _goToRegistration(),
         tooltip: 'Registrar producto',
